@@ -83,3 +83,7 @@ Route::get('/tables/basic', $controller_path . '\tables\Basic@index')->name('tab
 
 // categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+// add category
+Route::post('categories/add', [CategoryController::class, 'store'])->name('addCategory');
+// delete category
+Route::post('categories/delete/{id}', [CategoryController::class, 'destroy'])->name('deleteCategory');
