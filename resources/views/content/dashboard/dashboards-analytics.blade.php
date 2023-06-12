@@ -1,4 +1,8 @@
 @extends('layouts/contentNavbarLayout')
+@section('navbarContent')
+@parent
+<?php $activeMenu = $menuData[0]->menu[0]->name; ?>
+@endsection
 
 @section('title', 'Dashboard - Analytics')
 

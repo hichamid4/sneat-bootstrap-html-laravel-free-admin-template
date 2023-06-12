@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\back_end\CategoryController;
+use App\Http\Controllers\back_end\HandymanController;
+use App\Http\Controllers\back_end\ServiceController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -9,10 +12,27 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/dashboard1', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
+
 
 $controller_path = 'App\Http\Controllers';
 
@@ -80,10 +100,26 @@ Route::get('/form/layouts-horizontal', $controller_path . '\form_layouts\Horizon
 // tables
 Route::get('/tables/basic', $controller_path . '\tables\Basic@index')->name('tables-basic');
 
+// Back End Services
+Route::get('/dashboard/works/services', [ServiceController::class, 'index'])->name('back_end.works.services.index');
+Route::get('/dashboard/works/services/{id}', [ServiceController::class, 'show'])->name('back_end.works.services.show');
+Route::post('/dashboard/works/services/{id}/edit', [ServiceController::class, 'update'])->name('back_end.works.services.update');
+Route::post('/dashboard/works/services/createModal', [ServiceController::class, 'update'])->name('back_end.works.services.update');
+Route::post('/dashboard/works/services/store', [ServiceController::class, 'store'])->name('back_end.works.services.store');
+Route::get('/dashboard/works/services/{id}/destroy', [ServiceController::class, 'destroy'])->name('back_end.works.services.destroy');
 
-// categories
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-// add category
-Route::post('categories/add', [CategoryController::class, 'store'])->name('addCategory');
-// delete category
-Route::post('categories/delete/{id}', [CategoryController::class, 'destroy'])->name('deleteCategory');
+// Back End Categories 
+Route::get('/dashboard/works/categories', [CategoryController::class, 'index'])->name('back_end.works.categories.index');
+Route::get('/dashboard/works/categories/{id}', [CategoryController::class, 'show'])->name('back_end.works.categories.show');
+Route::post('/dashboard/works/categories/{id}/edit', [CategoryController::class, 'update'])->name('back_end.works.categories.update');
+Route::get('/dashboard/works/categories/createModal')->name('back_end.categories.catModal');
+Route::post('/dashboard/works/categories/store', [CategoryController::class, 'store'])->name('back_end.works.categories.store');
+Route::get('/dashboard/works/categories/{id}/destroy', [CategoryController::class, 'destroy'])->name('back_end.works.categories.destroy');
+
+// Back End handyman 
+Route::get('/dashboard/users/handymen', [HandymanController::class, 'index'])->name('back_end.users.handymen.index');
+Route::get('/dashboard/users/handymen/{id}', [HandymanController::class, 'show'])->name('back_end.users.handymen.show');
+Route::post('/dashboard/users/handymen/{id}/edit', [HandymanController::class, 'update'])->name('back_end.users.handymen.update');
+Route::get('/dashboard/users/handymen/createModal')->name('back_end.handymen.catModal');
+Route::post('/dashboard/users/handymen/store', [HandymanController::class, 'store'])->name('back_end.users.handymen.store');
+Route::get('/dashboard/users/handymen/destroy', [HandymanController::class, 'destroy'])->name('back_end.users.handymen.destroy');

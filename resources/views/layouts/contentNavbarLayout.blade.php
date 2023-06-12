@@ -17,6 +17,10 @@ $navbarDetached = 'navbar-detached';
 /* Content classes */
 $container = ($container ?? 'container-xxl');
 
+/* active Menu */
+
+
+
 @endphp
 
 @section('layoutContent')
@@ -24,7 +28,11 @@ $container = ($container ?? 'container-xxl');
   <div class="layout-container">
 
     @if ($isMenu)
-    @include('layouts/sections/menu/verticalMenu')
+    @if(isset($activeMenu) && $activeMenu == 'Dashboard2')
+    @include('layouts.sections.menu.dashboardMenu')
+    @else
+    @include('layouts.sections.menu.verticalMenu')
+    @endif
     @endif
 
 
@@ -79,3 +87,5 @@ $container = ($container ?? 'container-xxl');
   </div>
   <!-- / Layout wrapper -->
   @endsection
+
+  @yield('scripts')
