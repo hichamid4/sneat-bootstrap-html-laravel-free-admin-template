@@ -1,4 +1,4 @@
-<x-liveModal form-action="update">
+<x-liveModal form-action="update" class="livewireModals">
     <x-slot name="title">
         Hello World
     </x-slot>

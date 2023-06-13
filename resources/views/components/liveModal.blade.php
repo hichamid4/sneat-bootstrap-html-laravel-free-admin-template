@@ -1,4 +1,4 @@
-<div class="flex items-center justify-center min-h-screen  px-4 pt-4 pb-10 text-center">
+<div class="livewireModals px-4 pt-4 pb-10 text-center">
   @props(['formAction' => false])
 
   <div>
