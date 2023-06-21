@@ -5,6 +5,7 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\back_end\CategoryController;
 use App\Http\Controllers\back_end\HandymanController;
 use App\Http\Controllers\back_end\ServiceController;
+use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -113,7 +114,7 @@ Route::post('/dashboard/works/services/store', [ServiceController::class, 'store
 Route::get('/dashboard/works/services/{id}/destroy', [ServiceController::class, 'destroy'])->name('back_end.works.services.destroy');
 
 // Back End Categories 
-Route::get('/dashboard/works/categories', [CategoryController::class, 'index'])->name('back_end.works.categories.index');
+// Route::get('/dashboard/works/categories', [CategoryController::class, 'index'])->name('back_end.works.categories.index');
 Route::get('/dashboard/works/categories/{id}', [CategoryController::class, 'show'])->name('back_end.works.categories.show');
 Route::post('/dashboard/works/categories/{id}/edit', [CategoryController::class, 'update'])->name('back_end.works.categories.update');
 Route::get('/dashboard/works/categories/createModal')->name('back_end.categories.catModal');
@@ -134,12 +135,35 @@ Route::get('/dashboard/users/handymen/destroy', [HandymanController::class, 'des
 // Login
 Route::get('login-form', [LoginBasic::class, 'loginForm'])->name('loginForm');
 Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-Route::post('login-form/owner', [LoginBasic::class , 'login'])->name('login');
+Route::post('login-form/owner', [LoginBasic::class, 'login'])->name('login');
 // Dashboard
-Route::prefix('dashboard')->group(function () {
-	Route::get('/works/services', [ServiceController::class, 'index'])->name('back_end.works.services.index');
-	// Route::get('login-form/owner', [AdminController::class , 'login'])->name('admin.login');
+Route::prefix('dashboard')->middleware('admin')->group(function () {
+    // Back End Services
+    Route::get('/works/services', [ServiceController::class, 'index'])->name('back_end.works.services.index');
+    Route::get('/works/services/{id}', [ServiceController::class, 'show'])->name('back_end.works.services.show');
+    Route::post('/works/services/{id}/edit', [ServiceController::class, 'update'])->name('back_end.works.services.update');
+    Route::post('/works/services/createModal', [ServiceController::class, 'update'])->name('back_end.works.services.update');
+    Route::post('/works/services/store', [ServiceController::class, 'store'])->name('back_end.works.services.store');
+    Route::get('/works/services/{id}/destroy', [ServiceController::class, 'destroy'])->name('back_end.works.services.destroy');
+
+    // Back End Categories 
+    Route::get('/works/categories', [CategoryController::class, 'index'])->name('back_end.works.categories.index');
+    Route::get('/works/categories/{id}', [CategoryController::class, 'show'])->name('back_end.works.categories.show');
+    Route::post('/works/categories/{id}/edit', [CategoryController::class, 'update'])->name('back_end.works.categories.update');
+    Route::get('/works/categories/createModal')->name('back_end.categories.catModal');
+    Route::post('/works/categories/store', [CategoryController::class, 'store'])->name('back_end.works.categories.store');
+    Route::get('/works/categories/{id}/destroy', [CategoryController::class, 'destroy'])->name('back_end.works.categories.destroy');
+
+    // Back End handyman 
+    Route::get('/users/handymen', [HandymanController::class, 'index'])->name('back_end.users.handymen.index');
+    Route::get('/users/handymen/{id}', [HandymanController::class, 'show'])->name('back_end.users.handymen.show');
+    Route::post('/users/handymen/{id}/edit', [HandymanController::class, 'update'])->name('back_end.users.handymen.update');
+    Route::get('/users/handymen/createModal')->name('back_end.handymen.catModal');
+    Route::post('/users/handymen/store', [HandymanController::class, 'store'])->name('back_end.users.handymen.store');
+    Route::get('/users/handymen/destroy', [HandymanController::class, 'destroy'])->name('back_end.users.handymen.destroy');
 });
 
 // Home
-// Route::prefix()
+Route::prefix('home')->group(function() {
+    Route::get('/',[HomeController::class, 'index'])->name('home');
+});
