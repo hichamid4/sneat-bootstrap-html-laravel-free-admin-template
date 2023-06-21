@@ -67,7 +67,9 @@ $navbarDetached = ($navbarDetached ?? '');
                       </div>
                     </div>
                     <div class="flex-grow-1">
+                      @if (session('admin'))
                       <span class="fw-semibold d-block">{{ session('admin')['username'] }}</span>
+                      @endif
                       <small class="text-muted">Admin</small>
                     </div>
                   </div>
