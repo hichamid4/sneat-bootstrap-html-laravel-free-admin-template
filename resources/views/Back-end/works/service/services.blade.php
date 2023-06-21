@@ -1,6 +1,7 @@
-@php
-$isNavbar = false;
-@endphp
+@if(!session('admin'))  
+  return redirect()->route('loginForm');
+@endif
+
 
 @extends('layouts/contentNavbarLayout')
 @section('navbarContent')

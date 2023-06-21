@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\back_end\CategoryController;
 use App\Http\Controllers\back_end\HandymanController;
 use App\Http\Controllers\back_end\ServiceController;
@@ -100,8 +102,10 @@ Route::get('/form/layouts-horizontal', $controller_path . '\form_layouts\Horizon
 // tables
 Route::get('/tables/basic', $controller_path . '\tables\Basic@index')->name('tables-basic');
 
+/* ----------------------------------------------- BreIn Routers */
+
 // Back End Services
-Route::get('/dashboard/works/services', [ServiceController::class, 'index'])->name('back_end.works.services.index');
+// Route::get('/dashboard/works/services', [ServiceController::class, 'index'])->name('back_end.works.services.index');
 Route::get('/dashboard/works/services/{id}', [ServiceController::class, 'show'])->name('back_end.works.services.show');
 Route::post('/dashboard/works/services/{id}/edit', [ServiceController::class, 'update'])->name('back_end.works.services.update');
 Route::post('/dashboard/works/services/createModal', [ServiceController::class, 'update'])->name('back_end.works.services.update');
@@ -123,3 +127,19 @@ Route::post('/dashboard/users/handymen/{id}/edit', [HandymanController::class, '
 Route::get('/dashboard/users/handymen/createModal')->name('back_end.handymen.catModal');
 Route::post('/dashboard/users/handymen/store', [HandymanController::class, 'store'])->name('back_end.users.handymen.store');
 Route::get('/dashboard/users/handymen/destroy', [HandymanController::class, 'destroy'])->name('back_end.users.handymen.destroy');
+
+
+
+/*  --------------------------------------------- Front-end -----------------------------------------------  */
+// Login
+Route::get('login-form', [LoginBasic::class, 'loginForm'])->name('loginForm');
+Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+Route::post('login-form/owner', [LoginBasic::class , 'login'])->name('login');
+// Dashboard
+Route::prefix('dashboard')->group(function () {
+	Route::get('/works/services', [ServiceController::class, 'index'])->name('back_end.works.services.index');
+	// Route::get('login-form/owner', [AdminController::class , 'login'])->name('admin.login');
+});
+
+// Home
+// Route::prefix()

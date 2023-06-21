@@ -36,23 +36,20 @@ return [
     */
 
     'guards' => [
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admin',
-        ],
         'web' => [
             'driver' => 'session',
-            'provider' => 'handymen',
-        ],
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'home_owners',
+            'provider' => 'users',
         ],
 
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'admin',
-            'hash' => false,
+        // 'api' => [
+        //     'driver' => 'token',
+        //     'provider' => 'admin',
+        //     'hash' => false,
+        // ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
     ],
 
@@ -74,18 +71,18 @@ return [
     */
 
     'providers' => [
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
-        'handymen' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Handyman::class,
+            'model' => App\Models\User::class,
         ],
-        'home_owners' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\HomeOwner::class,
-        ],
+        // 'home_owners' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\HomeOwner::class,
+        // ],
 
         // 'users' => [
         //     'driver' => 'database',

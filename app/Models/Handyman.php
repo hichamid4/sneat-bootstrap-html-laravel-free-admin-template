@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property integer $id
@@ -27,6 +29,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class Handyman extends Authenticatable
 {
+    use HasFactory,HasApiTokens,Notifiable;
     /**
      * @var array
      */
