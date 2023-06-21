@@ -17,14 +17,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        if (session()->has('admin')) {
-            $services = Service::all();
-            return view('Back-end.works.service.services', ['services' => $services]);
-        }else {
-            return redirect()->route('loginForm');
-        }
-
-        
+        $services = Service::all();
+        return view('Back-end.works.service.services', ['services' => $services]);
     }
 
     /**
